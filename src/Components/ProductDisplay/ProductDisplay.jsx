@@ -1,4 +1,4 @@
-import React, { useContext, useState, } from "react";
+import React, { useContext, useState } from "react";
 import "./ProductDisplay.css";
 import star_icon from "../Assets/star_icon.png";
 import star_dull_icon from "../Assets/star_dull_icon.png";
@@ -12,10 +12,10 @@ const ProductDisplay = (props) => {
   const handleAddToCart = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    if (selectedSize !== null) {
+    if (selectedSize !== "") {
+      // Corrected condition
       addToCart(product.id, selectedSize);
     } else {
-     
       alert("Please select a size");
     }
   };
