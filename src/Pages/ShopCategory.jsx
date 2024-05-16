@@ -7,7 +7,7 @@ import Item from "../Components/Item/Item";
 const ShopCategory = (props) => {
   const { all_product } = useContext(ShopContext);
   const [sortBy, setSortBy] = useState(null);
-  const [showOptions, setShowOptions] = useState(false); // Added state to control visibility of sorting options
+  const [showOptions, setShowOptions] = useState(false); 
 
   const sortProducts = (sortBy) => {
     switch (sortBy) {
@@ -26,11 +26,11 @@ const ShopCategory = (props) => {
 
   const handleSort = (sortBy) => {
     setSortBy(sortBy);
-    setShowOptions(false); // Hide sorting options when an option is selected
+    setShowOptions(false);
   };
 
   const toggleOptions = () => {
-    setShowOptions(!showOptions); // Toggle visibility of sorting options
+    setShowOptions(!showOptions); 
   };
 
   const sortedProducts = sortProducts(sortBy);

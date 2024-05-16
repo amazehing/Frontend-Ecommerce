@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import "./CartItems.css";
 import { ShopContext } from "../../Context/ShopContext";
 import remove_icon from "../Assets/cart_cross_icon.png";
+import { Link } from "react-router-dom";
 
 const CartItems = () => {
   const {
@@ -48,7 +49,7 @@ const CartItems = () => {
                 <p>{item.name}</p>
                 <select
                   className="cartitem-size-select"
-                  value={size} // Using size from cartItemId
+                  value={size} 
                   onChange={(event) =>
                     handleSizeChange(cartItemId, event.target.value)
                   }
@@ -106,7 +107,9 @@ const CartItems = () => {
               <h3>€{getTotalCartAmount()}</h3>
             </div>
           </div>
+          <Link to ="/checkout">
           <button>PROCEED TO CHECK OUT</button>
+          </Link>
         </div>
         <div className="cartitems-promocode">
           <p>If you have a promo code, Enter it here</p>

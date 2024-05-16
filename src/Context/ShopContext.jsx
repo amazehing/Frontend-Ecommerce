@@ -5,7 +5,7 @@ export const ShopContext = createContext(null);
 
 const getDefaultCart = (selectedSize) => {
   return all_product.reduce((cart, product) => {
-    cart[product.id] = {
+    cart[`${product.id}-${selectedSize[product.id] || "default"}`] = {
       quantity: 0,
       size: selectedSize[product.id] || "default",
     };
@@ -23,13 +23,11 @@ const ShopContextProvider = (props) => {
       const existingItem = updatedCart[cartItemId];
 
       if (existingItem) {
-   
         updatedCart[cartItemId] = {
           ...existingItem,
           quantity: existingItem.quantity + quantity,
         };
       } else {
-  
         updatedCart[cartItemId] = {
           quantity,
           size,
@@ -40,28 +38,28 @@ const ShopContextProvider = (props) => {
     });
   };
 
-  const removeFromCart = (itemId) => {
+  const removeFromCart = (cartItemId) => {
     setCartItems((prev) => {
       const updatedCart = { ...prev };
-      if (updatedCart[itemId]?.quantity > 0) {
-        updatedCart[itemId].quantity--;
+      if (updatedCart[cartItemId]?.quantity > 0) {
+        updatedCart[cartItemId].quantity--;
       }
       return updatedCart;
     });
   };
 
-  const updateSize = (itemId, newSize) => {
+  const updateSize = (cartItemId, newSize) => {
     setCartItems((prev) => ({
       ...prev,
-      [itemId]: { ...prev[itemId], size: newSize },
+      [cartItemId]: { ...prev[cartItemId], size: newSize },
     }));
   };
 
-  const handleQuantityChange = (itemId, newQuantity) => {
+  const handleQuantityChange = (cartItemId, newQuantity) => {
     setCartItems((prev) => ({
       ...prev,
-      [itemId]: {
-        ...prev[itemId],
+      [cartItemId]: {
+        ...prev[cartItemId],
         quantity: newQuantity < 1 ? 1 : newQuantity,
       },
     }));
@@ -69,7 +67,7 @@ const ShopContextProvider = (props) => {
 
   const getTotalCartAmount = () => {
     return Object.keys(cartItems).reduce((totalAmount, cartItemId) => {
-      const [itemId] = cartItemId.split("-"); // Extract itemId from cartItemId
+      const [itemId] = cartItemId.split("-");
       const product = all_product.find((p) => p.id === Number(itemId));
       if (product && cartItems[cartItemId].quantity > 0) {
         totalAmount += product.new_price * cartItems[cartItemId].quantity;
@@ -85,6 +83,10 @@ const ShopContextProvider = (props) => {
     );
   };
 
+  const emptyCart = () => {
+    setCartItems(getDefaultCart({}));
+  };
+
   const contextValue = {
     getTotalCartItems,
     getTotalCartAmount,
@@ -94,6 +96,7 @@ const ShopContextProvider = (props) => {
     removeFromCart,
     updateSize,
     handleQuantityChange,
+    emptyCart,
   };
 
   return (

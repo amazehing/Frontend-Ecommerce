@@ -13,7 +13,6 @@ const ProductDisplay = (props) => {
     e.preventDefault();
     e.stopPropagation();
     if (selectedSize !== "") {
-      // Corrected condition
       addToCart(product.id, selectedSize);
     } else {
       alert("Please select a size");
