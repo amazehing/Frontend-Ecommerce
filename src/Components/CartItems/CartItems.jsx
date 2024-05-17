@@ -7,15 +7,15 @@ import { Link } from "react-router-dom";
 const CartItems = () => {
   const {
     getTotalCartAmount,
-    all_product,
+    allProducts,
     cartItems,
     removeFromCart,
     updateSize,
     handleQuantityChange,
   } = useContext(ShopContext);
 
-  const handleSizeChange = (productId, newSize) => {
-    updateSize(productId, newSize);
+  const handleSizeChange = (cartItemId, newSize) => {
+    updateSize(cartItemId, newSize);
   };
 
   return (
@@ -31,8 +31,8 @@ const CartItems = () => {
       </div>
       <hr />
       {Object.keys(cartItems).map((cartItemId) => {
-        const [itemId, size] = cartItemId.split("-"); // Splitting itemId and size
-        const item = all_product.find(
+        const [itemId, size] = cartItemId.split("-");
+        const item = allProducts.find(
           (product) => product.id === Number(itemId)
         );
         const cartItem = cartItems[cartItemId];
@@ -42,14 +42,14 @@ const CartItems = () => {
             <div key={cartItemId}>
               <div className="cartitems-format cartitems-format-main">
                 <img
-                  src={item.image}
+                  src={`http://localhost:8080/images/${item.images[0].id}`}
                   alt=""
                   className="carticon-product-icon"
                 />
-                <p>{item.name}</p>
+                <p>{cartItem.title}</p>
                 <select
                   className="cartitem-size-select"
-                  value={size} 
+                  value={size}
                   onChange={(event) =>
                     handleSizeChange(cartItemId, event.target.value)
                   }
@@ -60,7 +60,7 @@ const CartItems = () => {
                   <option value="XL">XL</option>
                   <option value="XXL">XXL</option>
                 </select>
-                <p>€{item.new_price}</p>
+                <p>€{cartItem.price}</p>
                 <select
                   className="cartitems-quantity"
                   value={cartItem.quantity}
@@ -74,7 +74,7 @@ const CartItems = () => {
                     </option>
                   ))}
                 </select>
-                <p>€{item.new_price * cartItem.quantity}</p>
+                <p>€{cartItem.total}</p>
                 <img
                   className="cartitems-remove-icon"
                   src={remove_icon}
@@ -107,8 +107,8 @@ const CartItems = () => {
               <h3>€{getTotalCartAmount()}</h3>
             </div>
           </div>
-          <Link to ="/checkout">
-          <button>PROCEED TO CHECK OUT</button>
+          <Link to="/checkout">
+            <button>PROCEED TO CHECK OUT</button>
           </Link>
         </div>
         <div className="cartitems-promocode">

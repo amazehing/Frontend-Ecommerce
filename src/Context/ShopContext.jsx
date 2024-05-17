@@ -1,22 +1,29 @@
-import React, { createContext, useState } from "react";
-import all_product from "../Components/Assets/all_product";
+import React, { createContext, useState, useEffect } from "react";
+import axios from "axios";
 
 export const ShopContext = createContext(null);
 
-const getDefaultCart = (selectedSize) => {
-  return all_product.reduce((cart, product) => {
-    cart[`${product.id}-${selectedSize[product.id] || "default"}`] = {
-      quantity: 0,
-      size: selectedSize[product.id] || "default",
-    };
-    return cart;
-  }, {});
-};
-
 const ShopContextProvider = (props) => {
-  const [cartItems, setCartItems] = useState(getDefaultCart({}));
+  const [cartItems, setCartItems] = useState({});
+  const [allProducts, setAllProducts] = useState([]);
+
+  const fetchAllProducts = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/products");
+      setAllProducts(response.data);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchAllProducts();
+  }, []);
 
   const addToCart = (itemId, size, quantity = 1) => {
+    const product = allProducts.find((p) => p.id === itemId);
+    if (!product) return;
+
     setCartItems((prev) => {
       const updatedCart = { ...prev };
       const cartItemId = `${itemId}-${size}`;
@@ -26,11 +33,17 @@ const ShopContextProvider = (props) => {
         updatedCart[cartItemId] = {
           ...existingItem,
           quantity: existingItem.quantity + quantity,
+          total: (existingItem.quantity + quantity) * product.new_price,
         };
       } else {
         updatedCart[cartItemId] = {
-          quantity,
+          id: itemId,
+          title: product.name,
           size,
+          price: product.new_price,
+          quantity,
+          total: quantity * product.new_price,
+          image: `http://localhost:8080/images/${product.images[0].id}`,
         };
       }
 
@@ -41,18 +54,30 @@ const ShopContextProvider = (props) => {
   const removeFromCart = (cartItemId) => {
     setCartItems((prev) => {
       const updatedCart = { ...prev };
-      if (updatedCart[cartItemId]?.quantity > 0) {
+      if (updatedCart[cartItemId]?.quantity > 1) {
         updatedCart[cartItemId].quantity--;
+        updatedCart[cartItemId].total -= updatedCart[cartItemId].price;
+      } else {
+        delete updatedCart[cartItemId];
       }
       return updatedCart;
     });
   };
 
   const updateSize = (cartItemId, newSize) => {
-    setCartItems((prev) => ({
-      ...prev,
-      [cartItemId]: { ...prev[cartItemId], size: newSize },
-    }));
+    setCartItems((prev) => {
+      const updatedCart = { ...prev };
+      const cartItem = updatedCart[cartItemId];
+
+      if (cartItem) {
+        const [itemId] = cartItemId.split("-");
+        const newCartItemId = `${itemId}-${newSize}`;
+        updatedCart[newCartItemId] = { ...cartItem, size: newSize };
+        delete updatedCart[cartItemId];
+      }
+
+      return updatedCart;
+    });
   };
 
   const handleQuantityChange = (cartItemId, newQuantity) => {
@@ -60,19 +85,15 @@ const ShopContextProvider = (props) => {
       ...prev,
       [cartItemId]: {
         ...prev[cartItemId],
-        quantity: newQuantity < 1 ? 1 : newQuantity,
+        quantity: newQuantity,
+        total: newQuantity * prev[cartItemId].price,
       },
     }));
   };
 
   const getTotalCartAmount = () => {
-    return Object.keys(cartItems).reduce((totalAmount, cartItemId) => {
-      const [itemId] = cartItemId.split("-");
-      const product = all_product.find((p) => p.id === Number(itemId));
-      if (product && cartItems[cartItemId].quantity > 0) {
-        totalAmount += product.new_price * cartItems[cartItemId].quantity;
-      }
-      return totalAmount;
+    return Object.values(cartItems).reduce((totalAmount, item) => {
+      return totalAmount + item.total;
     }, 0);
   };
 
@@ -84,13 +105,13 @@ const ShopContextProvider = (props) => {
   };
 
   const emptyCart = () => {
-    setCartItems(getDefaultCart({}));
+    setCartItems({});
   };
 
   const contextValue = {
     getTotalCartItems,
     getTotalCartAmount,
-    all_product,
+    allProducts,
     cartItems,
     addToCart,
     removeFromCart,

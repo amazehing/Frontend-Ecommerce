@@ -26,7 +26,7 @@ const Checkout = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setPaymentSuccess(true);
-    emptyCart(); // Leeg de winkelmand bij succesvolle betaling
+    emptyCart(); 
   };
 
   return (

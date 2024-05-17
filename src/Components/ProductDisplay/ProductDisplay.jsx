@@ -3,17 +3,23 @@ import "./ProductDisplay.css";
 import star_icon from "../Assets/star_icon.png";
 import star_dull_icon from "../Assets/star_dull_icon.png";
 import { ShopContext } from "../../Context/ShopContext";
+import placeholderImg from "../../Components/Assets/placeholder.jpg";
 
-const ProductDisplay = (props) => {
-  const { product } = props;
+const ProductDisplay = ({ item }) => {
   const { addToCart } = useContext(ShopContext);
   const [selectedSize, setSelectedSize] = useState("");
 
   const handleAddToCart = (e) => {
     e.preventDefault();
     e.stopPropagation();
+    if (item.images.length === 0) {
+      alert(
+        "This product cannot be added to the cart because it is not an existing product."
+      );
+      return;
+    }
     if (selectedSize !== "") {
-      addToCart(product.id, selectedSize);
+      addToCart(item.id, selectedSize);
     } else {
       alert("Please select a size");
     }
@@ -22,18 +28,20 @@ const ProductDisplay = (props) => {
   return (
     <div className="productdisplay">
       <div className="productdisplay-left">
-        <div className="productdisplay-img-list">
-          <img src={product.image} alt="" />
-          <img src={product.image} alt="" />
-          <img src={product.image} alt="" />
-          <img src={product.image} alt="" />
-        </div>
         <div className="productdisplay-img">
-          <img className="productdisplay-main-img" src={product.image} alt="" />
+          <img
+            className="productdisplay-main-img"
+            src={
+              item.images.length
+                ? `http://localhost:8080/images/${item.images[0].id}`
+                : placeholderImg
+            }
+            alt=""
+          />
         </div>
       </div>
       <div className="productdisplay-right">
-        <h1>{product.name}</h1>
+        <h1>{item.name}</h1>
         <div className="productdisplay-right-stars">
           <img src={star_icon} alt="" />
           <img src={star_icon} alt="" />
@@ -44,10 +52,10 @@ const ProductDisplay = (props) => {
         </div>
         <div className="productdisplay-right-prices">
           <div className="productdisplay-right-price-old">
-            €{product.old_price}
+            €{item.old_price}
           </div>
           <div className="productdisplay-right-price-new">
-            €{product.new_price}
+            €{item.new_price}
           </div>
         </div>
         <div className="productdisplay-right-description">
