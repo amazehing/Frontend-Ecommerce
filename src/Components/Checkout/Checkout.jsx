@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { ShopContext } from "../../Context/ShopContext"; // Zorg ervoor dat het pad correct is
+import { ShopContext } from "../../Context/ShopContext";
 import "./Checkout.css";
 
 const Checkout = () => {
@@ -26,18 +26,18 @@ const Checkout = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setPaymentSuccess(true);
-    emptyCart(); 
+    emptyCart();
   };
 
   return (
     <div className="checkout">
       {paymentSuccess ? (
-        <h2>Betaling gelukt!</h2>
+        <h2>Payment Successful!</h2>
       ) : (
         <form onSubmit={handleSubmit}>
-          <h2>Betalingsgegevens</h2>
+          <h2>Payment Details</h2>
           <div className="form-group">
-            <label>Voornaam</label>
+            <label>First Name</label>
             <input
               type="text"
               name="firstName"
@@ -47,7 +47,7 @@ const Checkout = () => {
             />
           </div>
           <div className="form-group">
-            <label>Achternaam</label>
+            <label>Last Name</label>
             <input
               type="text"
               name="lastName"
@@ -57,7 +57,7 @@ const Checkout = () => {
             />
           </div>
           <div className="form-group">
-            <label>Emailadres</label>
+            <label>Email Address</label>
             <input
               type="email"
               name="email"
@@ -67,7 +67,7 @@ const Checkout = () => {
             />
           </div>
           <div className="form-group">
-            <label>Postcode</label>
+            <label>Postal Code</label>
             <input
               type="text"
               name="postalCode"
@@ -77,7 +77,7 @@ const Checkout = () => {
             />
           </div>
           <div className="form-group">
-            <label>Straatnaam</label>
+            <label>Street Name</label>
             <input
               type="text"
               name="streetName"
@@ -87,7 +87,7 @@ const Checkout = () => {
             />
           </div>
           <div className="form-group">
-            <label>Huisnummer</label>
+            <label>House Number</label>
             <input
               type="text"
               name="houseNumber"
@@ -97,20 +97,20 @@ const Checkout = () => {
             />
           </div>
           <div className="form-group">
-            <label>Betaalmethode</label>
+            <label>Payment Method</label>
             <select
               name="paymentMethod"
               value={formData.paymentMethod}
               onChange={handleChange}
               required
             >
-              <option value="">Selecteer een betaalmethode</option>
+              <option value="">Select a payment method</option>
               <option value="ideal">iDEAL</option>
               <option value="paypal">PayPal</option>
             </select>
           </div>
           <button type="submit" className="pay-button">
-            Betalen
+            Pay
           </button>
         </form>
       )}

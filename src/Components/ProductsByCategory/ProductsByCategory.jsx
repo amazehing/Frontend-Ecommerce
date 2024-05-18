@@ -7,7 +7,7 @@ import placeholderImg from "../../Components/Assets/placeholder.jpg";
 
 const ProductsByCategory = () => {
     const [products, setProducts] = useState([]);
-    const [loading, setLoading] = useState(true); // Add loading state
+    const [loading, setLoading] = useState(true); 
     const {categoryId} = useParams();
 
     useEffect(() => {
@@ -15,7 +15,7 @@ const ProductsByCategory = () => {
             try {
                 const response = await axios.get(`http://localhost:8080/categories/${categoryId}/products`);
                 setProducts(response.data);
-                setLoading(false); // Set loading to false after data is fetched
+                setLoading(false); 
             } catch (error) {
                 console.error('Error fetching products:', error);
             }
@@ -26,26 +26,31 @@ const ProductsByCategory = () => {
 
 
     return (
-        <div className='relatedproducts'>
-            <h1>Products</h1>
-            <hr />
-            {loading ? ( // Render loading indicator if products are being fetched
-                <p>Loading...</p>
-            ) : (
-                <div className="relatedproducts-item">
-                    {products.map((product) => (
-                        <Item
-                            key={product.id}
-                            id={product.id}
-                            name={product.name}
-                            image={product.images.length ? `http://localhost:8080/images/${product.images[0].id}` : placeholderImg}
-                            new_price={product.new_price}
-                            old_price={product.old_price}
-                        />
-                    ))}
-                </div>
-            )}
-        </div>
+      <div>
+        <h1 className='products'>Products
+        <hr />
+        </h1>
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
+          <div className="relatedproducts-item">
+            {products.map((product) => (
+              <Item
+                key={product.id}
+                id={product.id}
+                name={product.name}
+                image={
+                  product.images.length
+                    ? `http://localhost:8080/images/${product.images[0].id}`
+                    : placeholderImg
+                }
+                new_price={product.new_price}
+                old_price={product.old_price}
+              />
+            ))}
+          </div>
+        )}
+      </div>
     );
 };
 
