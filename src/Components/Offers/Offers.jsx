@@ -10,7 +10,7 @@ const Offers = () => {
         <h1>Exclusive</h1>
         <h1>Offers For Women</h1>
         <p>ONLY ON BEST SELLER PRODUCTS</p>
-        <Link to="/womens">
+        <Link to="http://localhost:3000/categories/53/products">
           <button>Check Now</button>
         </Link>
       </div>
