@@ -20,18 +20,14 @@ const Navbar = () => {
     const fetchInfo = async () => {
       try {
         const response = await axios.get("http://localhost:8080/categories");
-        console.log("FETCHING CATEGORIES");
-
         const data = response.data;
-        console.log(data);
 
-        const categories = data.map((item) => ({
+        const formattedCategories = data.map((item) => ({
           id: item.id,
-          name: item.name,
+          name: capitalize(item.name),
         }));
 
-        console.log(categories);
-        setCategories(categories);
+        setCategories(formattedCategories);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -45,6 +41,10 @@ const Navbar = () => {
     const currentMenu = pathSegments[1];
     setMenu(currentMenu);
   }, [location.pathname]);
+
+  const capitalize = (str) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
 
   const dropdown_toggle = (e) => {
     menuRef.current.classList.toggle("nav-menu-visible");
