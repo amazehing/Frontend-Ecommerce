@@ -95,14 +95,12 @@ const LoginSignup = () => {
         <h1>{state}</h1>
         {message && <p className="message">{message}</p>}
         <div className="loginsignup-fields">
-          {state === "Sign Up" && (
-            <input
-              type="text"
-              placeholder="Your Name"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-          )}
+          <input
+            type="text"
+            placeholder="Your Name"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
           {state === "Sign Up" && (
             <input
               type="email"
@@ -118,9 +116,6 @@ const LoginSignup = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        {state === "Login" && username && (
-          <p className="username">Username: {username}</p>
-        )}
         {state === "Sign Up" && (
           <div className="loginsignup-agree">
             <input

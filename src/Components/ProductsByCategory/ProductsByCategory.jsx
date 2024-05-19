@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import Item from "../Item/Item";
 import "./ProductsByCategory.css";
@@ -10,22 +10,21 @@ const ProductsByCategory = () => {
   const [loading, setLoading] = useState(true);
   const { categoryId } = useParams();
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        // Fetch the last 8 products for the specified category
-        const response = await axios.get(
-          `http://localhost:8080/categories/${categoryId}/products?limit=8&sortBy=id`
-        );
-        setProducts(response.data);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      }
-    };
-
-    fetchProducts();
+  const fetchProducts = useCallback(async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/categories/${categoryId}/products?sortBy=createdAt&order=desc`
+      );
+      setProducts(response.data.slice(0, 8));
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
   }, [categoryId]);
+
+  useEffect(() => {
+    fetchProducts();
+  }, [fetchProducts]);
 
   return (
     <div>
