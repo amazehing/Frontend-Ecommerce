@@ -1,13 +1,13 @@
 import React, { useContext, useState } from "react";
 import "./CSS/ShopCategory.css";
-import { ShopContext } from "../Context/ShopContext";
+import { ShopContext } from "../../Context/ShopContext";
 import dropdown_icon from "../Components/Assets/dropdown_icon.png";
-import Item from "../Components/Item/Item";
+import Item from "../Item/Item";
 
 const ShopCategory = (props) => {
   const { all_product } = useContext(ShopContext);
   const [sortBy, setSortBy] = useState(null);
-  const [showOptions, setShowOptions] = useState(false); 
+  const [showOptions, setShowOptions] = useState(false);
 
   const sortProducts = (sortBy) => {
     switch (sortBy) {
@@ -30,7 +30,7 @@ const ShopCategory = (props) => {
   };
 
   const toggleOptions = () => {
-    setShowOptions(!showOptions); 
+    setShowOptions(!showOptions);
   };
 
   const sortedProducts = sortProducts(sortBy);
