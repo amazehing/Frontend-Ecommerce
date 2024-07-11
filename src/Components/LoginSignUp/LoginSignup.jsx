@@ -3,6 +3,42 @@ import { useNavigate } from "react-router-dom";
 import "./LoginSignup.css";
 import { AuthContext } from "../../Context/AuthContext";
 
+const InteractiveElement = ({
+  type,
+  placeholder,
+  value,
+  onChange,
+  onClick,
+  children,
+}) => {
+  if (type === "button") {
+    return (
+      <button type="button" onClick={onClick}>
+        {children}
+      </button>
+    );
+  } else if (type === "checkbox") {
+    return (
+      <div className="loginsignup-agree">
+        <input type="checkbox" checked={value} onChange={onChange} />
+        <label>{placeholder}</label>
+      </div>
+    );
+  } else {
+    return (
+      <input
+        type={type}
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+      />
+    );
+  }
+};
+
+const Message = ({ message }) =>
+  message && <p className="message">{message}</p>;
+
 const LoginSignup = () => {
   const [state, setState] = useState("Login");
   const [username, setUsername] = useState("");
@@ -93,23 +129,23 @@ const LoginSignup = () => {
     <div className="loginsignup">
       <div className="loginsignup-container">
         <h1>{state}</h1>
-        {message && <p className="message">{message}</p>}
+        <Message message={message} />
         <div className="loginsignup-fields">
-          <input
+          <InteractiveElement
             type="text"
             placeholder="Your Name"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
           {state === "Sign Up" && (
-            <input
+            <InteractiveElement
               type="email"
               placeholder="Email Address"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
           )}
-          <input
+          <InteractiveElement
             type="password"
             placeholder="Password"
             value={password}
@@ -117,16 +153,16 @@ const LoginSignup = () => {
           />
         </div>
         {state === "Sign Up" && (
-          <div className="loginsignup-agree">
-            <input
-              type="checkbox"
-              checked={agreeTerms}
-              onChange={() => setAgreeTerms(!agreeTerms)}
-            />
-            <label htmlFor="">I accept the Terms of Service.</label>
-          </div>
+          <InteractiveElement
+            type="checkbox"
+            placeholder="I accept the Terms of Service."
+            value={agreeTerms}
+            onChange={() => setAgreeTerms(!agreeTerms)}
+          />
         )}
-        <button type="button" onClick={handleSubmit}>Continue</button>
+        <InteractiveElement type="button" onClick={handleSubmit}>
+          Continue
+        </InteractiveElement>
         {state === "Login" && (
           <p className="loginsignup-forgot" onClick={handleForgotPassword}>
             Forgot password?
