@@ -34,7 +34,7 @@ const NewsLetter = () => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-        <button className="Subscribe" onClick={handleSubscribe}>
+        <button type="button" className="Subscribe" onClick={handleSubscribe}>
           Subscribe
         </button>
       </div>

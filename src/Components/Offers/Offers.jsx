@@ -41,7 +41,7 @@ const Offers = () => {
         <p>ONLY ON BEST SELLER PRODUCTS</p>
 
         {categories.length > 0 && (
-          <button onClick={handleCheckNow}>Check Now</button>
+          <button type="button" onClick={handleCheckNow}>Check Now</button>
         )}
       </div>
       <div className="offers-right">

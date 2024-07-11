@@ -7,7 +7,7 @@ import Item from "../Item/Item";
 const ShopCategory = (props) => {
   const { all_product } = useContext(ShopContext);
   const [sortBy, setSortBy] = useState(null);
-  const [showOptions, setShowOptions] = useState(false);
+  const [showOptions, setShowOptions] = useState(false); 
 
   const sortProducts = (sortBy) => {
     switch (sortBy) {
@@ -30,7 +30,7 @@ const ShopCategory = (props) => {
   };
 
   const toggleOptions = () => {
-    setShowOptions(!showOptions);
+    setShowOptions(!showOptions); 
   };
 
   const sortedProducts = sortProducts(sortBy);
@@ -48,8 +48,8 @@ const ShopCategory = (props) => {
           </span>
           {showOptions && (
             <div className="sort-options">
-              <button onClick={() => handleSort("lowest")}>Lowest Price</button>
-              <button onClick={() => handleSort("highest")}>
+              <button type="button" onClick={() => handleSort("lowest")}>Lowest Price</button>
+              <button type="button" onClick={() => handleSort("highest")}>
                 Highest Price
               </button>
             </div>
