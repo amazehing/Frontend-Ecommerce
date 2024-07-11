@@ -19,7 +19,7 @@ const NewsLetter = () => {
       );
     } else {
       setMessage("Subscribed to the Newsletter!");
-      setEmail(""); 
+      setEmail("");
     }
   };
 
