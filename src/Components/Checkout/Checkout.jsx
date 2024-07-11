@@ -1,9 +1,11 @@
 import React, { useState, useContext } from "react";
 import { ShopContext } from "../../Context/ShopContext";
 import "./Checkout.css";
+import CustomInput from "../Custom/CustomInput";
+import CustomSelect from "../Custom/CustomSelect";
 
 const Checkout = () => {
-  const [formData, setFormData] = useState({
+  const initialFormData = {
     firstName: "",
     lastName: "",
     email: "",
@@ -11,16 +13,15 @@ const Checkout = () => {
     streetName: "",
     houseNumber: "",
     paymentMethod: "",
-  });
+  };
 
+  const [formData, setFormData] = useState(initialFormData);
   const [paymentSuccess, setPaymentSuccess] = useState(false);
   const { emptyCart } = useContext(ShopContext);
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = (e) => {
@@ -29,6 +30,39 @@ const Checkout = () => {
     emptyCart();
   };
 
+  const inputFields = [
+    {
+      label: "First Name",
+      name: "firstName",
+      placeholder: "Enter your first name",
+    },
+    {
+      label: "Last Name",
+      name: "lastName",
+      placeholder: "Enter your last name",
+    },
+    {
+      label: "Email Address",
+      name: "email",
+      placeholder: "Enter your email address",
+    },
+    {
+      label: "Postal Code",
+      name: "postalCode",
+      placeholder: "Enter your postal code",
+    },
+    {
+      label: "Street Name",
+      name: "streetName",
+      placeholder: "Enter your street name",
+    },
+    {
+      label: "House Number",
+      name: "houseNumber",
+      placeholder: "Enter your house number",
+    },
+  ];
+
   return (
     <div className="checkout">
       {paymentSuccess ? (
@@ -36,79 +70,27 @@ const Checkout = () => {
       ) : (
         <form onSubmit={handleSubmit}>
           <h2>Payment Details</h2>
-          <div className="form-group">
-            <label>First Name</label>
-            <input
-              type="text"
-              name="firstName"
-              value={formData.firstName}
+          {inputFields.map((field) => (
+            <CustomInput
+              key={field.name}
+              label={field.label}
+              name={field.name}
+              value={formData[field.name]}
               onChange={handleChange}
-              required
+              placeholder={field.placeholder}
             />
-          </div>
-          <div className="form-group">
-            <label>Last Name</label>
-            <input
-              type="text"
-              name="lastName"
-              value={formData.lastName}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label>Email Address</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label>Postal Code</label>
-            <input
-              type="text"
-              name="postalCode"
-              value={formData.postalCode}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label>Street Name</label>
-            <input
-              type="text"
-              name="streetName"
-              value={formData.streetName}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label>House Number</label>
-            <input
-              type="text"
-              name="houseNumber"
-              value={formData.houseNumber}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label>Payment Method</label>
-            <select
-              name="paymentMethod"
-              value={formData.paymentMethod}
-              onChange={handleChange}
-              required
-            >
-              <option value="">Select a payment method</option>
-              <option value="ideal">iDEAL</option>
-              <option value="paypal">PayPal</option>
-            </select>
-          </div>
+          ))}
+          <CustomSelect
+            label="Payment Method"
+            name="paymentMethod"
+            value={formData.paymentMethod}
+            onChange={handleChange}
+            options={[
+              { value: "", label: "Select a payment method" },
+              { value: "ideal", label: "iDEAL" },
+              { value: "paypal", label: "PayPal" },
+            ]}
+          />
           <button type="submit" className="pay-button">
             Pay
           </button>
