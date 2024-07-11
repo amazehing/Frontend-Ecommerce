@@ -1,13 +1,13 @@
 import React, { useContext, useState } from "react";
 import "./CSS/ShopCategory.css";
 import { ShopContext } from "../../Context/ShopContext";
-import dropdown_icon from "../Components/Assets/dropdown_icon.png";
 import Item from "../Item/Item";
+import SortOptions from "../Components/SortOptions"; // Zorg dat het pad klopt
 
 const ShopCategory = (props) => {
   const { all_product } = useContext(ShopContext);
   const [sortBy, setSortBy] = useState(null);
-  const [showOptions, setShowOptions] = useState(false); 
+  const [showOptions, setShowOptions] = useState(false);
 
   const sortProducts = (sortBy) => {
     switch (sortBy) {
@@ -30,7 +30,7 @@ const ShopCategory = (props) => {
   };
 
   const toggleOptions = () => {
-    setShowOptions(!showOptions); 
+    setShowOptions(!showOptions);
   };
 
   const sortedProducts = sortProducts(sortBy);
@@ -42,19 +42,11 @@ const ShopCategory = (props) => {
         <p>
           <span>Showing 1-12</span> out of 36 products
         </p>
-        <div className="shopcategory-sort" onClick={toggleOptions}>
-          <span>
-            Sort by <img src={dropdown_icon} alt="" />
-          </span>
-          {showOptions && (
-            <div className="sort-options">
-              <button type="button" onClick={() => handleSort("lowest")}>Lowest Price</button>
-              <button type="button" onClick={() => handleSort("highest")}>
-                Highest Price
-              </button>
-            </div>
-          )}
-        </div>
+        <SortOptions
+          showOptions={showOptions}
+          toggleOptions={toggleOptions}
+          handleSort={handleSort}
+        />
       </div>
       <div className="shopcategory-products">
         {sortedProducts.map((item, i) => (
