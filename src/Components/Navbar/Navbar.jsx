@@ -90,12 +90,12 @@ const Navbar = () => {
           <>
             <div className="nav-user-info">
               <span className="username">{user}</span>
-              <button onClick={logout}>Logout</button>
+              <button type="button" onClick={logout}>Logout</button>
             </div>
           </>
         ) : (
           <Link to="/login">
-            <button>Login</button>
+            <button type="button">Login</button>
           </Link>
         )}
         <Link to="/cart">

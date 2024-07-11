@@ -81,7 +81,7 @@ const ProductDisplay = ({ item }) => {
             </select>
           </div>
         </div>
-        <button onClick={handleAddToCart}>ADD TO CART</button>
+        <button type="button" onClick={handleAddToCart}>ADD TO CART</button>
       </div>
     </div>
   );

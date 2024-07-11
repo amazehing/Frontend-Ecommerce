@@ -48,8 +48,8 @@ const ShopCategory = (props) => {
           </span>
           {showOptions && (
             <div className="sort-options">
-              <button onClick={() => handleSort("lowest")}>Lowest Price</button>
-              <button onClick={() => handleSort("highest")}>
+              <button type="button" onClick={() => handleSort("lowest")}>Lowest Price</button>
+              <button type="button" onClick={() => handleSort("highest")}>
                 Highest Price
               </button>
             </div>

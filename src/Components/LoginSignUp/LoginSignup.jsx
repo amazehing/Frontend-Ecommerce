@@ -126,7 +126,7 @@ const LoginSignup = () => {
             <label htmlFor="">I accept the Terms of Service.</label>
           </div>
         )}
-        <button onClick={handleSubmit}>Continue</button>
+        <button type="button" onClick={handleSubmit}>Continue</button>
         {state === "Login" && (
           <p className="loginsignup-forgot" onClick={handleForgotPassword}>
             Forgot password?
