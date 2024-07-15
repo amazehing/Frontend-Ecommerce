@@ -1,47 +1,108 @@
-.descriptionbox{
-    margin: 120px 170px;
+.descriptionbox {
+  margin: 20px;
 }
 
-.descriptionbox-navigator{
-    display: flex;
+.descriptionbox-navigator {
+  display: flex;
+  justify-content: flex-end; /* Align to right */
 }
 
-.descriptionbox-nav-box{
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.descriptionbox-nav-box {
+  padding: 10px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.descriptionbox-reviews {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.review-item {
+  border: 1px solid #ccc;
+  padding: 15px;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.review-name {
+  font-weight: bold;
+}
+
+.review-rating {
+  color: #888;
+}
+
+.review-comment {
+  margin-top: 8px;
+}
+
+.add-review-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  width: 400px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.close-modal {
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  color: #aaa;
+}
+
+@media (max-width: 768px) {
+  .descriptionbox {
+    margin: 10px;
+  }
+  
+  .descriptionbox-nav-box {
     font-size: 16px;
-    font-weight: 600;
-    width: 171px;
-    height: 70px;
-    border: 1px solid #d0d0d0;
-}
-
-.descriptionbox-nav-box.fade{
-    background: #FBFBFB;
-    color: #555;
-}
-
-.descriptionbox-description{
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-    border: 1px solid #D0D0D0;
-    padding: 48px;
-    padding-bottom: 70px;
-}
-
-@media(max-width:1280px){
-    .descriptionbox{
-        margin: 60px;
-    }
-}
-
-@media(max-width:800px){
-    .descriptionbox{
-        margin: 60px 20px;
-    }
-    .descriptionbox-description{
-        font-size: 14px;
-    }
+  }
+  
+  .modal-content {
+    width: 90%;
+    max-width: 400px;
+  }
 }
