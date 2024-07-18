@@ -13,7 +13,7 @@ const ProductsByCategory = () => {
   const fetchProducts = useCallback(async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8443/categories/${categoryId}/products?sortBy=createdAt&order=desc`
+        `https://localhost:8443/categories/${categoryId}/products?sortBy=createdAt&order=desc`
       );
       setProducts(response.data.slice(0, 8));
       setLoading(false);
@@ -41,7 +41,7 @@ const ProductsByCategory = () => {
               name={product.name}
               image={
                 product.images.length
-                  ? `http://localhost:8443/images/${product.images[0].id}`
+                  ? `https://localhost:8443/images/${product.images[0].id}`
                   : placeholderImg
               }
               new_price={product.new_price}

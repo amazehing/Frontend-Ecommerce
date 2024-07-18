@@ -77,7 +77,7 @@ const Navbar = () => {
   useEffect(() => {
     const fetchInfo = async () => {
       try {
-        const response = await axios.get("http://localhost:8443/categories");
+        const response = await axios.get("https://localhost:8443/categories");
         const data = response.data;
 
         const formattedCategories = data.map((item) => ({

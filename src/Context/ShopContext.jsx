@@ -9,7 +9,7 @@ const ShopContextProvider = (props) => {
 
   const fetchAllProducts = async () => {
     try {
-      const response = await axios.get("http://localhost:8443/products");
+      const response = await axios.get("https://localhost:8443/products");
       setAllProducts(response.data);
     } catch (error) {
       console.error("Error fetching products:", error);
@@ -43,7 +43,7 @@ const ShopContextProvider = (props) => {
           price: product.new_price,
           quantity,
           total: quantity * product.new_price,
-          image: `http://localhost:8443/images/${product.images[0].id}`,
+          image: `https://localhost:8443/images/${product.images[0].id}`,
         };
       }
 

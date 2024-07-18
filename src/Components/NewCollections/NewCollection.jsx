@@ -8,7 +8,7 @@ const NewCollection = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:8443/products")
+    fetch("https://localhost:8443/products")
       .then((response) => response.json())
       .then((data) => {
         // Ensure only the last 8 products are kept in state
@@ -37,7 +37,7 @@ const NewCollection = () => {
               name={product.name}
               image={
                 product.images.length
-                  ? `http://localhost:8443/images/${product.images[0].id}`
+                  ? `https://localhost:8443/images/${product.images[0].id}`
                   : placeholderImg
               }
               new_price={product.new_price}

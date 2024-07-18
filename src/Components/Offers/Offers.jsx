@@ -11,7 +11,7 @@ const Offers = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await fetch("http://localhost:8443/categories");
+      const response = await fetch("https://localhost:8443/categories");
       if (!response.ok) {
         throw new Error("Failed to fetch categories");
       }

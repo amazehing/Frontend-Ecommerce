@@ -33,7 +33,7 @@ const ProductDisplay = ({ item }) => {
             className="productdisplay-main-img"
             src={
               item.images.length
-                ? `http://localhost:8443/images/${item.images[0].id}`
+                ? `https://localhost:8443/images/${item.images[0].id}`
                 : placeholderImg
             }
             alt=""
